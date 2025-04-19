@@ -12,6 +12,11 @@ variables:
 steps:
 - checkout: self
 
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: '1.6.6' 
+  displayName: "Instalar Terraform"
+
 - script: |
     echo "subscription_id = \"$(subscription_id)\"" > terraform.tfvars
   displayName: "Generar terraform.tfvars"
@@ -24,8 +29,10 @@ steps:
       -backend-config="key=aks-acr-infra.tfstate"
   displayName: "Terraform Init con backend remoto"
 
-- script: terraform plan -out=tfplan
+- script: |
+    terraform plan -out=tfplan
   displayName: "Terraform Plan"
 
-- script: terraform apply -auto-approve tfplan
+- script: |
+    terraform apply -auto-approve tfplan
   displayName: "Terraform Apply"
