@@ -14,7 +14,6 @@ steps:
 
 - script: |
     echo "subscription_id = \"$(subscription_id)\"" > terraform.tfvars
-  workingDirectory: infra
   displayName: "Generar terraform.tfvars"
 
 - script: |
@@ -23,13 +22,10 @@ steps:
       -backend-config="storage_account_name=$(tfstate)" \
       -backend-config="container_name=tfstate" \
       -backend-config="key=aks-acr-infra.tfstate"
-  workingDirectory: infra
   displayName: "Terraform Init con backend remoto"
 
 - script: terraform plan -out=tfplan
-  workingDirectory: infra
   displayName: "Terraform Plan"
 
 - script: terraform apply -auto-approve tfplan
-  workingDirectory: infra
   displayName: "Terraform Apply"
