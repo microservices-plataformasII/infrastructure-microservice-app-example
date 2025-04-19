@@ -1,0 +1,22 @@
+# Local .terraform files
+.terraform/
+
+# Terraform plan files
+*.tfplan
+
+# Sensitive or local variable files
+terraform.tfvars
+*.tfvars.json
+
+# Terraform state files (optional if you use remote state)
+*.tfstate
+*.tfstate.backup
+
+# Crash logs
+crash.log
+
+# Ignore IDE/editor configs (optional but recommended)
+.vscode/
+.idea/
+.DS_Store
+
