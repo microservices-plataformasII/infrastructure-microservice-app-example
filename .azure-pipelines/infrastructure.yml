@@ -12,6 +12,13 @@ variables:
 steps:
 - checkout: self
 
+- script: |
+    echo "DEBUG: client_id=$(client_id)"
+    echo "DEBUG: subscription_id=$(subscription_id)"
+    echo "DEBUG: tenant_id=$(tenant_id)"
+  displayName: "Debug de variables"
+
+
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Azure-For-Students-Connection'
