@@ -16,6 +16,7 @@ steps:
     echo "DEBUG: client_id=$(client_id)"
     echo "DEBUG: subscription_id=$(subscription_id)"
     echo "DEBUG: tenant_id=$(tenant_id)"
+    echo "DEBUG: client_secret=$(client_secret)"
   displayName: "Debug de variables"
 
 
