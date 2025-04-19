@@ -19,6 +19,12 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       echo "Autenticado en Azure"
+
+      # Configurar las variables de entorno para Terraform
+      echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$(client_id)"
+      echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$(client_secret)"
+      echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$(subscription_id)"
+      echo "##vso[task.setvariable variable=ARM_TENANT_ID]$(tenant_id)"
   displayName: "Autenticación en Azure"
 
 - task: TerraformInstaller@1
@@ -37,11 +43,26 @@ steps:
       -backend-config="container_name=tfstate" \
       -backend-config="key=aks-acr-infra.tfstate"
   displayName: "Terraform Init con backend remoto"
+  env:
+    ARM_CLIENT_ID: $(client_id)
+    ARM_CLIENT_SECRET: $(client_secret)
+    ARM_SUBSCRIPTION_ID: $(subscription_id)
+    ARM_TENANT_ID: $(tenant_id)
 
 - script: |
     terraform plan -out=tfplan
   displayName: "Terraform Plan"
+  env:
+    ARM_CLIENT_ID: $(client_id)
+    ARM_CLIENT_SECRET: $(client_secret)
+    ARM_SUBSCRIPTION_ID: $(subscription_id)
+    ARM_TENANT_ID: $(tenant_id)
 
 - script: |
     terraform apply -auto-approve tfplan
   displayName: "Terraform Apply"
+  env:
+    ARM_CLIENT_ID: $(client_id)
+    ARM_CLIENT_SECRET: $(client_secret)
+    ARM_SUBSCRIPTION_ID: $(subscription_id)
+    ARM_TENANT_ID: $(tenant_id)
