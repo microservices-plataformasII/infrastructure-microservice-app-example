@@ -30,18 +30,33 @@ steps:
     echo "subscription_id = \"$(subscription_id)\"" > terraform.tfvars
   displayName: "Generar terraform.tfvars"
 
-- script: |
-    terraform init \
-      -backend-config="resource_group_name=terraform-state-rg" \
-      -backend-config="storage_account_name=$(tfstate)" \
-      -backend-config="container_name=tfstate" \
-      -backend-config="key=aks-acr-infra.tfstate"
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure-For-Students-Connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      terraform init \
+        -backend-config="resource_group_name=terraform-state-rg" \
+        -backend-config="storage_account_name=$(tfstate)" \
+        -backend-config="container_name=tfstate" \
+        -backend-config="key=aks-acr-infra.tfstate"
   displayName: "Terraform Init con backend remoto"
 
-- script: |
-    terraform plan -out=tfplan
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure-For-Students-Connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      terraform plan -out=tfplan
   displayName: "Terraform Plan"
 
-- script: |
-    terraform apply -auto-approve tfplan
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure-For-Students-Connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      terraform apply -auto-approve tfplan
   displayName: "Terraform Apply"
