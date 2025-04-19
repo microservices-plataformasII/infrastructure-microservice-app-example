@@ -12,9 +12,13 @@ variables:
 steps:
 - checkout: self
 
-- task: AzureLogin@1
+- task: AzureCLI@2
   inputs:
-    azureSubscription: 'Azure-For-Students-Connection'  
+    azureSubscription: 'Azure-For-Students-Connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      echo "Autenticado en Azure"
   displayName: "Autenticación en Azure"
 
 - task: TerraformInstaller@1
