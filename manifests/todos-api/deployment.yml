@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: todos-api
-          image: acrmicroservicesLopezMedina.azurecr.io/todos-api:latest
+          image: acrmicroservicesLopezMedina.azurecr.io/todos-api
           ports:
             - containerPort: 8082
           env:

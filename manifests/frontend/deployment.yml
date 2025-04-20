@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: acrmicroservicesLopezMedina.azurecr.io/frontend-microservice:latest
+          image: acrmicroservicesLopezMedina.azurecr.io/frontend-microservice
           ports:
             - containerPort: 8080
           env:
