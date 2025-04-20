@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: users-api
-          image: acrmicroservicesLopezMedina.azurecr.io/users-api
+          image: acrmicroservicesLopezMedina.azurecr.io/users-api-microservice
           ports:
             - containerPort: 8083
           env:
