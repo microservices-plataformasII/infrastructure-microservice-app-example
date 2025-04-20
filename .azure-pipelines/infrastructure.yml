@@ -47,7 +47,7 @@ steps:
   displayName: "Terraform Init con backend remoto"
   env:
     ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(client_secret)  # Si el client_secret está configurado en el pipeline, lo usas aquí
+    ARM_CLIENT_SECRET: $(client_secret)  # Asegúrate de que esta variable esté configurada
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
 
@@ -57,7 +57,7 @@ steps:
   displayName: "Terraform Plan"
   env:
     ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(client_secret)  # Si el client_secret está configurado en el pipeline, lo usas aquí
+    ARM_CLIENT_SECRET: $(client_secret)  # Asegúrate de que esta variable esté configurada
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
 
@@ -67,6 +67,6 @@ steps:
   displayName: "Terraform Apply"
   env:
     ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(client_secret)  # Si el client_secret está configurado en el pipeline, lo usas aquí
+    ARM_CLIENT_SECRET: $(client_secret)  # Asegúrate de que esta variable esté configurada
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
