@@ -45,8 +45,8 @@ steps:
       -backend-config="key=aks-acr-infra.tfstate"
   displayName: "Terraform Init con backend remoto"
   env:
-    ARM_CLIENT_ID: $(client_id)  # Ahora usa el client_id directamente
-    ARM_CLIENT_SECRET: $(client_secret)  # Usa el client_secret configurado
+    ARM_CLIENT_ID: $(client_id)  
+    ARM_CLIENT_SECRET: $(client_secret)  
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
 
@@ -55,8 +55,8 @@ steps:
     terraform plan -out=tfplan
   displayName: "Terraform Plan"
   env:
-    ARM_CLIENT_ID: $(client_id)  # Usa el client_id directamente
-    ARM_CLIENT_SECRET: $(client_secret)  # Usa el client_secret configurado
+    ARM_CLIENT_ID: $(client_id)  
+    ARM_CLIENT_SECRET: $(client_secret)  
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
 
@@ -65,7 +65,14 @@ steps:
     terraform apply -auto-approve tfplan
   displayName: "Terraform Apply"
   env:
-    ARM_CLIENT_ID: $(client_id)  # Usa el client_id directamente
-    ARM_CLIENT_SECRET: $(client_secret)  # Usa el client_secret configurado
+    ARM_CLIENT_ID: $(client_id) 
+    ARM_CLIENT_SECRET: $(client_secret)  
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Pipeline.Workspace)'
+    ArtifactName: 'infra-artifact'
+    publishLocation: 'Container'
+
