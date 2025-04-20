@@ -7,9 +7,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  azureSubscription: 'NombreDelServicioAzure'
+  azureSubscription: 'Azure-For-Students-Connection'
   resourceGroup: 'devops-infra-rg'
-  aksCluster: 'NombreDelAKS'
+  aksCluster: 'aks-devops-cluster'
   namespace: 'default'
 
 steps:
