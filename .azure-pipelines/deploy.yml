@@ -22,6 +22,6 @@ steps:
       echo "Obteniendo credenciales del AKS..."
       az aks get-credentials --resource-group $(resourceGroup) --name $(aksCluster) --overwrite-existing
       
-      echo "Aplicando manifiestos de Kubernetes..."
-      kubectl apply -f manifests/
+      echo "Aplicando manifiestos de Kubernetes (recursivo)..."
+      kubectl apply -R -f manifests/
   displayName: 'Desplegar en AKS'
