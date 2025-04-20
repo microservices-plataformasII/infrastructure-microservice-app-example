@@ -12,14 +12,6 @@ variables:
 steps:
 - checkout: self
 
-- script: |
-    echo "DEBUG: client_id=$(client_id)"
-    echo "DEBUG: subscription_id=$(subscription_id)"
-    echo "DEBUG: tenant_id=$(tenant_id)"
-    echo "DEBUG: client_secret=$(client_secret)"
-  displayName: "Debug de variables"
-
-
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Azure-For-Students-Connection'
@@ -27,12 +19,6 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       echo "Autenticado en Azure"
-
-      # Configurar las variables de entorno para Terraform (para que estén disponibles en pasos posteriores)
-      echo "##vso[task.setvariable variable=ARM_CLIENT_ID;isOutput=false]$(client_id)"
-      echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET;isOutput=false]$(client_secret)"
-      echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID;isOutput=false]$(subscription_id)"
-      echo "##vso[task.setvariable variable=ARM_TENANT_ID;isOutput=false]$(tenant_id)"
   displayName: "Autenticación en Azure"
 
 - task: TerraformInstaller@1
@@ -41,7 +27,7 @@ steps:
   displayName: "Instalar Terraform"
 
 - script: |
-    echo "subscription_id = \"$(ARM_SUBSCRIPTION_ID)\"" > terraform.tfvars
+    echo "subscription_id = \"$(subscription_id)\"" > terraform.tfvars
   displayName: "Generar terraform.tfvars"
 
 - script: |
@@ -51,26 +37,11 @@ steps:
       -backend-config="container_name=tfstate" \
       -backend-config="key=aks-acr-infra.tfstate"
   displayName: "Terraform Init con backend remoto"
-  env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
-    ARM_TENANT_ID: $(ARM_TENANT_ID)
 
 - script: |
     terraform plan -out=tfplan
   displayName: "Terraform Plan"
-  env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
-    ARM_TENANT_ID: $(ARM_TENANT_ID)
 
 - script: |
     terraform apply -auto-approve tfplan
   displayName: "Terraform Apply"
-  env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
-    ARM_TENANT_ID: $(ARM_TENANT_ID)
