@@ -1,0 +1,27 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'NombreDelServicioAzure'
+  resourceGroup: 'devops-infra-rg'
+  aksCluster: 'NombreDelAKS'
+  namespace: 'default'
+
+steps:
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      echo "Obteniendo credenciales del AKS..."
+      az aks get-credentials --resource-group $(resourceGroup) --name $(aksCluster) --overwrite-existing
+      
+      echo "Aplicando manifiestos de Kubernetes..."
+      kubectl apply -f manifests/
+  displayName: 'Desplegar en AKS'
