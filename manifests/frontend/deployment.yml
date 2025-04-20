@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: <acr-name>.azurecr.io/frontend-microservice:1.0
+          image: acrmicroservicesLopezMedina.azurecr.io/frontend-microservice:1.0
           ports:
             - containerPort: 8080
           env:
@@ -30,15 +30,3 @@ spec:
               value: "6379"
             - name: ZIPKIN_URL
               value: "http://zipkin:9411/api/v2/spans"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: frontend
-spec:
-  selector:
-    app: frontend
-  type: LoadBalancer
-  ports:
-    - port: 8080
-      targetPort: 8080
