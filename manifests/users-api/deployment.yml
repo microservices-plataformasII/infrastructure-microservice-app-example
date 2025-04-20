@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-api
+  template:
+    metadata:
+      labels:
+        app: users-api
+    spec:
+      containers:
+        - name: users-api
+          image: <acr-name>.azurecr.io/users-api:1.0
+          ports:
+            - containerPort: 8083
+          env:
+            - name: JWT_SECRET
+              value: "PRFT"
+            - name: SERVER_PORT
+              value: "8083"
