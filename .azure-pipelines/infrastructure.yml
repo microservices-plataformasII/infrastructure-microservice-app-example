@@ -22,7 +22,6 @@ steps:
       echo "Autenticado en Azure"
       # Extraer el Tenant ID, Client ID y Subscription ID de la autenticación actual
       echo "##vso[task.setvariable variable=ARM_TENANT_ID;isOutput=false]$(az account show --query tenantId -o tsv)"
-      echo "##vso[task.setvariable variable=ARM_CLIENT_ID;isOutput=false]$(az ad sp show --id $(az account show --query id -o tsv) --query appId -o tsv)"
       echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID;isOutput=false]$(az account show --query id -o tsv)"
   displayName: "Autenticación en Azure"
 
@@ -46,8 +45,8 @@ steps:
       -backend-config="key=aks-acr-infra.tfstate"
   displayName: "Terraform Init con backend remoto"
   env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(client_secret)  # Asegúrate de que esta variable esté configurada
+    ARM_CLIENT_ID: $(client_id)  # Ahora usa el client_id directamente
+    ARM_CLIENT_SECRET: $(client_secret)  # Usa el client_secret configurado
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
 
@@ -56,8 +55,8 @@ steps:
     terraform plan -out=tfplan
   displayName: "Terraform Plan"
   env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(client_secret)  # Asegúrate de que esta variable esté configurada
+    ARM_CLIENT_ID: $(client_id)  # Usa el client_id directamente
+    ARM_CLIENT_SECRET: $(client_secret)  # Usa el client_secret configurado
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
 
@@ -66,7 +65,7 @@ steps:
     terraform apply -auto-approve tfplan
   displayName: "Terraform Apply"
   env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(client_secret)  # Asegúrate de que esta variable esté configurada
+    ARM_CLIENT_ID: $(client_id)  # Usa el client_id directamente
+    ARM_CLIENT_SECRET: $(client_secret)  # Usa el client_secret configurado
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
