@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: log-message-processor
-          image: acrmicroservicesLopezMedina.azurecr.io/log-message-processor:latest
+          image: acrmicroservicesLopezMedina.azurecr.io/log-message-processor-microservice
           env:
             - name: REDIS_HOST
               value: "redis"
