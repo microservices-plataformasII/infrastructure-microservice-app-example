@@ -17,16 +17,12 @@ spec:
           image: acrmicroservicesLopezMedina.azurecr.io/todos-api-microservice
           ports:
             - containerPort: 8082
+          envFrom:
+            - configMapRef:
+                name: app-config
           env:
-            - name: TODO_API_PORT
-              value: "8082"
             - name: JWT_SECRET
-              value: "PRFT"
-            - name: REDIS_HOST
-              value: "redis"
-            - name: REDIS_PORT
-              value: "6379"
-            - name: REDIS_CHANNEL
-              value: "log_channel"
-            - name: ZIPKIN_URL
-              value: "http://zipkin:9411/api/v2/spans"
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET

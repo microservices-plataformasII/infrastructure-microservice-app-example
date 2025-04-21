@@ -21,7 +21,30 @@ steps:
     inlineScript: |
       echo "Obteniendo credenciales del AKS..."
       az aks get-credentials --resource-group $(resourceGroup) --name $(aksCluster) --overwrite-existing
-      
+  displayName: 'Obtener credenciales del AKS'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      echo "Obteniendo JWT_SECRET desde Azure Key Vault..."
+      JWT_SECRET=$(az keyvault secret show --vault-name "keyvaultmicroserviceslm" --name "JWT-SECRET" --query value -o tsv)
+
+      echo "Creando secret jwt-secret en AKS..."
+      kubectl create secret generic jwt-secret \
+        --from-literal=JWT_SECRET=$JWT_SECRET \
+        --namespace $(namespace) \
+        --dry-run=client -o yaml | kubectl apply -f -
+  displayName: 'Inyectar JWT_SECRET desde Key Vault'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
       echo "Aplicando manifiestos de Kubernetes (recursivo)..."
       kubectl apply -R -f manifests/
-  displayName: 'Desplegar en AKS'
+  displayName: 'Desplegar manifiestos en AKS'

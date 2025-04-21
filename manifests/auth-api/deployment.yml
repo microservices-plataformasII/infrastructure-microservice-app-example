@@ -17,12 +17,12 @@ spec:
           image: acrmicroservicesLopezMedina.azurecr.io/auth-api-microservice
           ports:
             - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: app-config
           env:
             - name: JWT_SECRET
-              value: "PRFT"
-            - name: AUTH_API_PORT
-              value: "8000"
-            - name: USERS_API_ADDRESS
-              value: "http://users-api:8083"
-            - name: ZIPKIN_URL
-              value: "http://zipkin:9411/api/v2/spans"
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET
