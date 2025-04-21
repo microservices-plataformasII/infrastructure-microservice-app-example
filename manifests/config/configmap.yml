@@ -11,3 +11,4 @@ data:
   REDIS_CHANNEL: "log_channel"
   TODO_API_PORT: "8082"
   AUTH_API_PORT: "8000"
+  USERS_API_ADDRESS: "http://users-api:8083"
