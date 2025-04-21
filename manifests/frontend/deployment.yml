@@ -17,16 +17,9 @@ spec:
           image: acrmicroservicesLopezMedina.azurecr.io/frontend-microservice
           ports:
             - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: app-config
           env:
-            - name: PORT
-              value: "8080"
-            - name: AUTH_API_ADDRESS
-              value: "http://auth-api:8000"
-            - name: TODOS_API_ADDRESS
-              value: "http://todos-api:8082"
-            - name: REDIS_HOST
-              value: "redis"
-            - name: REDIS_PORT
-              value: "6379"
-            - name: ZIPKIN_URL
-              value: "http://zipkin:9411/api/v2/spans"
+             - name: PORT
+               value: "8080"

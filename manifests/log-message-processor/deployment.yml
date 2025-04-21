@@ -15,12 +15,6 @@ spec:
       containers:
         - name: log-message-processor
           image: acrmicroservicesLopezMedina.azurecr.io/log-message-processor-microservice
-          env:
-            - name: REDIS_HOST
-              value: "redis"
-            - name: REDIS_PORT
-              value: "6379"
-            - name: REDIS_CHANNEL
-              value: "log_channel"
-            - name: ZIPKIN_URL
-              value: "http://zipkin:9411/api/v2/spans"
+          envFrom:
+            - configMapRef:
+                name: app-config

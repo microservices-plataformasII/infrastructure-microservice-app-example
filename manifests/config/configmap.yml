@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  AUTH_API_ADDRESS: "http://auth-api:8000"
+  TODOS_API_ADDRESS: "http://todos-api:8082"
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  ZIPKIN_URL: "http://zipkin:9411/api/v2/spans"
+  REDIS_CHANNEL: "log_channel"
+  TODO_API_PORT: "8082"
+  AUTH_API_PORT: "8000"
+  USERS_API_ADDRESS: "http://users-api:8083"
