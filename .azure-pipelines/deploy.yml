@@ -55,7 +55,11 @@ steps:
     scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
-      echo "Forzando el restart de los deployments..."
-      kubectl rollout restart deployment --all -n $(namespace)
-  displayName: 'Reiniciar deployments'
+      echo "Forzando restart de todos los deployments en el namespace $(namespace)..."
+
+      for deployment in $(kubectl get deployments -n $(namespace) -o jsonpath='{.items[*].metadata.name}'); do
+        echo "Reiniciando $deployment..."
+        kubectl rollout restart deployment $deployment -n $(namespace)
+      done
+  displayName: 'Reiniciar deployments uno por uno'
 
