@@ -60,19 +60,6 @@ steps:
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
     ARM_TENANT_ID: $(ARM_TENANT_ID)
 
-# Añadir JWT_SECRET al Key Vault
-- task: AzureCLI@2
-  inputs:
-    azureSubscription: 'Azure-For-Students-Connection'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: |
-      az keyvault secret set \
-        --vault-name "keyvaultmicroserviceslm" \
-        --name "JWT-SECRET" \
-        --value "$(jwt_secret)"
-  displayName: "Guardar JWT_SECRET en Key Vault"
-
 # Ejecutar Terraform Apply
 - script: |
     terraform apply -auto-approve tfplan
@@ -89,3 +76,15 @@ steps:
     ArtifactName: 'infra-artifact'
     publishLocation: 'Container'
 
+# Añadir JWT_SECRET al Key Vault
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure-For-Students-Connection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az keyvault secret set \
+        --vault-name "keyvaultmicroserviceslm" \
+        --name "JWT-SECRET" \
+        --value "$(jwt_secret)"
+  displayName: "Guardar JWT_SECRET en Key Vault"
