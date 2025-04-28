@@ -48,3 +48,14 @@ steps:
       echo "Aplicando manifiestos de Kubernetes (recursivo)..."
       kubectl apply -R -f manifests/
   displayName: 'Desplegar manifiestos en AKS'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      echo "Forzando el restart de los deployments..."
+      kubectl rollout restart deployment --all -n $(namespace)
+  displayName: 'Reiniciar deployments'
+
