@@ -30,7 +30,7 @@ steps:
     scriptLocation: inlineScript
     inlineScript: |
       echo "Obteniendo JWT_SECRET desde Azure Key Vault..."
-      JWT_SECRET=$(az keyvault secret show --vault-name "keyvaultmicroserviceslm" --name "JWT-SECRET" --query value -o tsv)
+      JWT_SECRET=$(az keyvault secret show --vault-name "keyvaultmicroserviceslopezmedina" --name "JWT-SECRET" --query value -o tsv)
 
       echo "Creando secret jwt-secret en AKS..."
       kubectl create secret generic jwt-secret \
