@@ -84,7 +84,7 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       az keyvault secret set \
-        --vault-name "keyvaultmicroserviceslm" \
+        --vault-name "keyvaultlopezmedina" \
         --name "JWT-SECRET" \
         --value "$(jwt_secret)"
   displayName: "Guardar JWT_SECRET en Key Vault"
